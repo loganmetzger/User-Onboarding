@@ -57,7 +57,28 @@ function App() {
   }
 
   // Form actions
-  
+  const inputChange = (name, value) => {
+    yup
+      .reach(formSchema, name)
+      .validate(value)
+      .then(valid => {
+        setFormErrors({
+          ...formErrors,
+          [name]: "",
+        })
+      })
+      .catch(err => {
+        setFormErrors({
+          ...formErrors,
+          [name]: err.errors[0],
+        })
+      })
+
+      setFormValues({
+        ...formValues,
+        [name]: value
+      })
+  }
 
 
   // useEffect to start axios call on page load
