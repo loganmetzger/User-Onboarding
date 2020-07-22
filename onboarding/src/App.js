@@ -35,13 +35,41 @@ function App() {
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(initialDisabled);
 
+  // Network helper functions being declared, axios calls being made
+  const getUsers = () => {
+    axios.get('https://reqres.in/api/users')
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+  const postNewUser = newUser => {
+    axios.post('https://reqres.in/api/users', newUser)
+      .then(res => {
+        setUsers([res.data, ...users])
+        setFormValues(initialFormValues)
+      })
+      .catch(err => {
+        debugger
+      })
+  }
+
+  // Form actions
   
+
+
+  // useEffect to start axios call on page load
+  useEffect(() => {
+    getUsers()
+  }, [])
 
   return (
     <div className="App">
       <header><h1>User Onboarding</h1></header>
 
-      <userForm 
+      <UserForm 
         // props go here
       />
       {
