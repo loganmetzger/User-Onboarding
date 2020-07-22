@@ -129,7 +129,7 @@ function App() {
         users.map(user => {
           return (
             <User 
-              // props go here
+              key={user.id} details={user}
             />
           )
         })

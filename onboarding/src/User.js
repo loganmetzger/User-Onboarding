@@ -1,8 +1,11 @@
 import React from 'react'
 
-function User() {
+function User({ details }) {
     return (
-        <div></div>
+        <div>
+            <h2>{details.name}</h2>
+            <p>Email: {details.email}</p>
+        </div>
     )
 }
 
