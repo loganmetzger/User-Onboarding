@@ -45,6 +45,7 @@ function App() {
         console.log(err);
       });
   }
+
   const postNewUser = newUser => {
     axios.post('https://reqres.in/api/users', newUser)
       .then(res => {
@@ -80,18 +81,49 @@ function App() {
       })
   }
 
+  const checkboxChange = (name, isChecked) => {
+    setFormValues({
+      ...formValues,
+      terms: {
+        ...formValues.accepted,
+        [name]: isChecked,
+      }
+    })
+  }
+
+  const submit = () => {
+    const newUser = {
+      name: formValues.name.trim(),
+      email: formValues.email.trim(),
+      password: formValues.password.trim(),
+      terms: Object.keys(formValues.terms).filter(tm => formValues.terms[tm])
+    }
+
+    postNewUser(newUser)
+  }
 
   // useEffect to start axios call on page load
   useEffect(() => {
     getUsers()
   }, [])
 
+  useEffect(() => {
+    formSchema.isValid(formValues).then(valid => {
+      setDisabled(!valid)
+    })
+  }, [formValues])
+
   return (
     <div className="App">
       <header><h1>User Onboarding</h1></header>
 
       <UserForm 
-        // props go here
+        values={formValues}
+        inputChange={inputChange}
+        checkboxChange={checkboxChange}
+        submit={submit}
+        disabled={disabled}
+        errors={formErrors}
       />
       {
         users.map(user => {
