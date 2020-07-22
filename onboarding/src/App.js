@@ -14,12 +14,29 @@ const initialFormValues = {
   terms: {
     accepted: false
   }
-}
+};
 
+// Used for yup validation
+const initialFormErrors = {
+  name: '', 
+  email: '',
+  password: ''
+};
 
+// Empty array for users and keep disabled disabled for submit button
+const initialUsers = [];
+const initialDisabled = true;
 
 
 function App() {
+  // Let's set some state to our initial variables
+  const [users, setUsers] = useState(initialUsers);
+  const [formValues, setFormValues] = useState(initialFormValues);
+  const [formErrors, setFormErrors] = useState(initialFormErrors);
+  const [disabled, setDisabled] = useState(initialDisabled);
+
+
+
   return (
     <div className="App">
       <header><h1>User Onboarding</h1></header>
